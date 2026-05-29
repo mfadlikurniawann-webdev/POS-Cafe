@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem *)",
+      "PowerShell(flutter *)",
+      "PowerShell(New-Item *)",
+      "PowerShell(Get-ChildItem \"D:\\\\Project_NgodingLagi\\\\POS-Cafe\" -Recurse -File | Where-Object { $_.Extension -in '.dart', '.yaml', '.sql', '.md' } | Select-Object FullName | Sort-Object FullName)",
+      "PowerShell(Get-ChildItem \"D:\\\\Project_NgodingLagi\\\\POS-Cafe\" -Recurse | Where-Object { !$_.PSIsContainer } | ForEach-Object { $_.FullName.Replace\\(\"D:\\\\Project_NgodingLagi\\\\POS-Cafe\\\\\", \"\"\\) } | Sort-Object)",
+      "PowerShell($PSVersionTable.PSVersion)",
+      "PowerShell($env:PROCESSOR_ARCHITECTURE)",
+      "PowerShell(winget *)",
+      "PowerShell(choco *)",
+      "PowerShell(Test-Path *)",
+      "PowerShell(Get-Volume *)",
+      "PowerShell([System.IO.DriveInfo]::GetDrives\\(\\) | Where-Object { $_.Name -match '[CD]:' } | Select-Object Name, @{Name='TotalGB';Expression={[math]::Round\\($_.TotalSize/1GB, 2\\)}}, @{Name='FreeGB';Expression={[math]::Round\\($_.AvailableFreeSpace/1GB, 2\\)}}, @{Name='UsedGB';Expression={[math]::Round\\(\\($_.TotalSize - $_.AvailableFreeSpace\\)/1GB, 2\\)}})",
+      "PowerShell($drives = [System.IO.DriveInfo]::GetDrives\\(\\); $drives | ForEach-Object { Write-Output \"$\\($_.Name\\) - Total: $\\([math]::Round\\($_.TotalSize/1GB, 2\\)\\) GB, Free: $\\([math]::Round\\($_.AvailableFreeSpace/1GB, 2\\)\\) GB\" })",
+      "PowerShell(scoop *)",
+      "PowerShell(curl *)",
+      "PowerShell(Start-Process \"ms-settings:developers\")",
+      "PowerShell(flutter devices *)",
+      "PowerShell(Copy-Item *)",
+      "PowerShell(flutter analyze *)",
+      "PowerShell(flutter build *)",
+      "PowerShell(flutter run *)"
+    ]
+  }
+}
