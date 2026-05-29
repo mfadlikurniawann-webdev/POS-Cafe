@@ -25,8 +25,11 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Query is required' });
     }
 
-    // Connect to Neon Database
-    const sql = neon('postgresql://neondb_owner:npg_dwc7rRCm4uZo@ep-royal-surf-aopa38s3-pooler.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require');
+    // Connect to Neon Database using Environment Variables
+    if (!process.env.DATABASE_URL) {
+      return res.status(500).json({ error: 'DATABASE_URL environment variable is missing' });
+    }
+    const sql = neon(process.env.DATABASE_URL);
     
     let processedQuery = query;
     let processedParams = [];
