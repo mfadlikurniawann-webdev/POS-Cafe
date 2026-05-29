@@ -6,7 +6,6 @@ import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/currency_formatter.dart';
 import '../../../data/models/order.dart';
 import '../../../providers/pos_provider.dart';
-import '../pos/pos_screen.dart';
 import '../../widgets/receipt_preview_dialog.dart';
 
 class XenditPaymentScreen extends StatefulWidget {
@@ -66,15 +65,23 @@ class _XenditPaymentScreenState extends State<XenditPaymentScreen> {
     final pos = context.read<PosProvider>();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF9FAFB),
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: Image.network(
-          'https://upload.wikimedia.org/wikipedia/commons/e/e0/Xendit_Logo.png',
-          height: 24,
-          errorBuilder: (_, __, ___) => Text(
-            'Xendit Payment Gateway',
-            style: GoogleFonts.inter(fontWeight: FontWeight.w800, color: const Color(0xFF5C26FF)),
-          ),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.security_rounded, color: AppColors.primary, size: 20),
+            const SizedBox(width: 8),
+            Text(
+              'Pembayaran Aman',
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.w700,
+                color: AppColors.primary,
+                fontSize: 16,
+              ),
+            ),
+          ],
         ),
         centerTitle: true,
         elevation: 0,
@@ -83,48 +90,65 @@ class _XenditPaymentScreenState extends State<XenditPaymentScreen> {
       ),
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
           child: Container(
-            width: 420,
+            width: 440,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.grey[200]!),
+              borderRadius: BorderRadius.circular(24),
+              border: Border.all(color: AppColors.border, width: 1.5),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.04),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
+                  color: Colors.black.withOpacity(0.06),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
                 )
               ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Merchant Header
+                // Premium Merchant Header
                 Container(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
                   decoration: const BoxDecoration(
-                    color: Color(0xFF5C26FF),
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                    color: AppColors.primary,
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
                   ),
                   child: Column(
                     children: [
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        decoration: BoxDecoration(
+                          color: AppColors.accent.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: AppColors.accent, width: 1),
+                        ),
+                        child: Text(
+                          'KOPI NUSANTARA',
+                          style: GoogleFonts.inter(
+                            color: AppColors.accentLight,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 1.5,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
                       Text(
-                        'KOPI NUSANTARA',
+                        'Invoice Meja ${widget.tableNumber}',
                         style: GoogleFonts.inter(
                           color: Colors.white,
                           fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          letterSpacing: 1,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Invoice Meja ${widget.tableNumber}',
+                        'Atas Nama: ${widget.customerName}',
                         style: GoogleFonts.inter(
-                          color: Colors.white.withOpacity(0.8),
-                          fontSize: 12,
+                          color: Colors.white.withOpacity(0.7),
+                          fontSize: 13,
                         ),
                       ),
                     ],
@@ -132,88 +156,174 @@ class _XenditPaymentScreenState extends State<XenditPaymentScreen> {
                 ),
 
                 Padding(
-                  padding: const EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(28),
                   child: Column(
                     children: [
                       // Timer
                       Text(
-                        'Selesaikan pembayaran dalam',
-                        style: GoogleFonts.inter(fontSize: 12, color: Colors.grey[500]),
+                        'Selesaikan Pembayaran Dalam',
+                        style: GoogleFonts.inter(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.textSecondary,
+                        ),
                       ),
-                      const SizedBox(height: 4),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Icons.timer_outlined, size: 16, color: AppColors.error),
-                          const SizedBox(width: 4),
-                          Text(
-                            _formattedTime,
-                            style: GoogleFonts.inter(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.error,
+                      const SizedBox(height: 6),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: AppColors.errorLight,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Icons.timer_outlined, size: 16, color: AppColors.error),
+                            const SizedBox(width: 6),
+                            Text(
+                              _formattedTime,
+                              style: GoogleFonts.inter(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.error,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 24),
 
-                      // QRIS Code Box
+                      // QRIS Premium Card Box
                       Container(
-                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: Colors.grey[200]!),
-                          borderRadius: BorderRadius.circular(16),
+                          color: AppColors.surfaceVariant,
+                          border: Border.all(color: AppColors.border),
+                          borderRadius: BorderRadius.circular(20),
                         ),
+                        padding: const EdgeInsets.all(20),
                         child: Column(
                           children: [
-                            Text(
-                              'QRIS GPN DYNAMIC',
-                              style: GoogleFonts.inter(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w800,
-                                color: Colors.blue[900],
-                                letterSpacing: 1,
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            // Simulated QR Code vector
-                            Container(
-                              width: 200,
-                              height: 200,
-                              color: Colors.black,
-                              padding: const EdgeInsets.all(8),
-                              child: GridView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 10,
-                                  crossAxisSpacing: 2,
-                                  mainAxisSpacing: 2,
+                            // QRIS Header
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.network(
+                                  'https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg',
+                                  height: 22,
+                                  errorBuilder: (_, __, ___) => Text(
+                                    'QRIS',
+                                    style: GoogleFonts.inter(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w900,
+                                      color: const Color(0xFF1B4E9B),
+                                      letterSpacing: 1,
+                                    ),
+                                  ),
                                 ),
-                                itemCount: 100,
-                                itemBuilder: (context, idx) {
-                                  // Simulated QR patterns
-                                  final isDark = (idx < 20 && idx % 3 == 0) ||
-                                      (idx > 80 && idx % 2 == 0) ||
-                                      (idx % 7 == 0) ||
-                                      (idx % 11 == 0) ||
-                                      (idx > 30 && idx < 40) ||
-                                      (idx > 60 && idx < 70 && idx % 3 == 0);
-                                  return Container(
-                                    color: isDark ? Colors.black : Colors.white,
-                                  );
-                                },
-                              ),
+                                const SizedBox(width: 8),
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue[900],
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Text(
+                                    'GPN',
+                                    style: GoogleFonts.inter(
+                                      fontSize: 9,
+                                      fontWeight: FontWeight.w800,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: 16),
+                            // Simulated QR Code vector with Center QRIS logo
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Container(
+                                  width: 220,
+                                  height: 220,
+                                  color: Colors.white,
+                                  padding: const EdgeInsets.all(12),
+                                  child: GridView.builder(
+                                    shrinkWrap: true,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 12,
+                                      crossAxisSpacing: 2,
+                                      mainAxisSpacing: 2,
+                                    ),
+                                    itemCount: 144,
+                                    itemBuilder: (context, idx) {
+                                      // Border coordinates (QR corner anchor points)
+                                      final isCorner = (idx < 4 || (idx >= 8 && idx < 12)) && (idx % 12 < 4 || idx % 12 >= 8);
+                                      // Simulated random QR noise
+                                      final isNoise = (idx * 17) % 3 == 0 || (idx * 23) % 5 == 0;
+                                      // Avoid center area for overlay logo
+                                      final isCenter = (idx ~/ 12 >= 4 && idx ~/ 12 <= 7) && (idx % 12 >= 4 && idx % 12 <= 7);
+                                      
+                                      final isDark = !isCenter && (isCorner || isNoise);
+                                      return Container(
+                                        color: isDark ? AppColors.primaryDark : Colors.white,
+                                      );
+                                    },
+                                  ),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(6),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(8),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.1),
+                                        blurRadius: 4,
+                                      )
+                                    ],
+                                  ),
+                                  child: Text(
+                                    'QRIS',
+                                    style: GoogleFonts.inter(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w900,
+                                      color: Colors.blue[900],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
                             Text(
-                              'Pindai menggunakan M-Banking atau E-Wallet Anda',
-                              style: GoogleFonts.inter(fontSize: 11, color: Colors.grey[600]),
+                              'Pindai dengan aplikasi pembayaran digital pilihan Anda seperti GoPay, OVO, DANA, LinkAja, atau M-Banking.',
+                              style: GoogleFonts.inter(
+                                fontSize: 11,
+                                color: AppColors.textSecondary,
+                                height: 1.4,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ],
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Premium Invoice Ticket Divider
+                      Row(
+                        children: List.generate(
+                          20,
+                          (index) => Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 2),
+                              child: Container(
+                                height: 2,
+                                color: AppColors.border,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 24),
@@ -223,44 +333,53 @@ class _XenditPaymentScreenState extends State<XenditPaymentScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Total Tagihan',
-                            style: GoogleFonts.inter(fontSize: 13, color: Colors.grey[600]),
+                            'Total Pembayaran',
+                            style: GoogleFonts.inter(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textSecondary,
+                            ),
                           ),
                           Text(
                             CurrencyFormatter.format(widget.amount),
                             style: GoogleFonts.inter(
-                              fontSize: 18,
+                              fontSize: 22,
                               fontWeight: FontWeight.w800,
-                              color: const Color(0xFF5C26FF),
+                              color: AppColors.primary,
                             ),
                           ),
                         ],
                       ),
-                      const Divider(height: 32),
+                      const SizedBox(height: 32),
 
-                      // Simulator Webhook / Pay Action
+                      // Actions
                       ElevatedButton(
-                        onPressed: _isProcessing ? null : () => _simulatPay(pos),
+                        onPressed: _isProcessing ? null : () => _simulatePay(pos),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF5C26FF),
+                          backgroundColor: AppColors.success,
                           padding: const EdgeInsets.symmetric(vertical: 16),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          elevation: 0,
                         ),
                         child: _isProcessing
                             ? const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                                width: 22,
+                                height: 22,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.5,
+                                  color: Colors.white,
+                                ),
                               )
                             : Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Icon(Icons.check_circle_rounded, color: Colors.white, size: 20),
+                                  const Icon(Icons.verified_rounded, color: Colors.white, size: 20),
                                   const SizedBox(width: 8),
                                   Text(
                                     'Simulasikan Webhook Sukses',
                                     style: GoogleFonts.inter(
                                       fontWeight: FontWeight.w700,
+                                      fontSize: 14,
                                       color: Colors.white,
                                     ),
                                   ),
@@ -268,12 +387,36 @@ class _XenditPaymentScreenState extends State<XenditPaymentScreen> {
                               ),
                       ),
                       const SizedBox(height: 12),
-                      OutlinedButton(
-                        onPressed: () => Navigator.pop(context),
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: Colors.grey[300]!),
+                      SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton(
+                          onPressed: () => Navigator.pop(context),
+                          style: OutlinedButton.styleFrom(
+                            side: const BorderSide(color: AppColors.border),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                            padding: const EdgeInsets.symmetric(vertical: 14),
+                            foregroundColor: AppColors.textSecondary,
+                          ),
+                          child: Text(
+                            'Batalkan Pesanan',
+                            style: GoogleFonts.inter(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
                         ),
-                        child: const Text('Batalkan Pesanan'),
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(Icons.lock_outline_rounded, size: 12, color: AppColors.textHint),
+                          const SizedBox(width: 4),
+                          Text(
+                            'Secured by Xendit Payment Gateway',
+                            style: GoogleFonts.inter(fontSize: 10, color: AppColors.textHint),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -286,7 +429,7 @@ class _XenditPaymentScreenState extends State<XenditPaymentScreen> {
     );
   }
 
-  Future<void> _simulatPay(PosProvider pos) async {
+  Future<void> _simulatePay(PosProvider pos) async {
     setState(() {
       _isProcessing = true;
     });
@@ -323,3 +466,4 @@ class _XenditPaymentScreenState extends State<XenditPaymentScreen> {
     }
   }
 }
+

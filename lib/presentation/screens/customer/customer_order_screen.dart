@@ -163,15 +163,39 @@ class _CustomerOrderScreenState extends State<CustomerOrderScreen> {
               itemBuilder: (context, i) {
                 final cat = categories[i];
                 final isSelected = menu.selectedCategory.id == cat.id;
-                return ChoiceChip(
-                  avatar: Icon(
-                    IconHelper.getCategoryIcon(cat.name),
-                    size: 14,
-                    color: isSelected ? Colors.white : AppColors.primary,
+                return GestureDetector(
+                  onTap: () => menu.selectCategory(cat),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: isSelected ? AppColors.primary : AppColors.surfaceVariant,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: isSelected ? AppColors.primary : AppColors.border,
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          IconHelper.getCategoryIcon(cat.name),
+                          size: 16,
+                          color: isSelected ? Colors.white : AppColors.primary,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          cat.name,
+                          style: GoogleFonts.inter(
+                            fontSize: 13,
+                            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                            color: isSelected ? Colors.white : AppColors.textPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  label: Text(cat.name),
-                  selected: isSelected,
-                  onSelected: (_) => menu.selectCategory(cat),
                 );
               },
             ),
