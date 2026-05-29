@@ -3,12 +3,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/currency_formatter.dart';
+import '../../../core/utils/icon_helper.dart';
 import '../../../data/models/category.dart';
 import '../../../providers/menu_provider.dart';
 import '../../../providers/pos_provider.dart';
 import '../../widgets/cart_item_widget.dart';
 import '../../widgets/payment_dialog.dart';
 import '../../widgets/product_card.dart';
+import '../../widgets/table_selector_dialog.dart';
+import '../../widgets/receipt_preview_dialog.dart';
 
 class PosScreen extends StatefulWidget {
   const PosScreen({super.key});
@@ -20,7 +23,7 @@ class PosScreen extends StatefulWidget {
 class _PosScreenState extends State<PosScreen> {
   final _searchCtrl = TextEditingController();
   final _customerCtrl = TextEditingController();
-  final _tableCtrl = TextEditingController();
+  bool _isDineIn = true;
 
   @override
   void initState() {
@@ -34,18 +37,95 @@ class _PosScreenState extends State<PosScreen> {
   void dispose() {
     _searchCtrl.dispose();
     _customerCtrl.dispose();
-    _tableCtrl.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(flex: 6, child: _buildProductPanel()),
-        Container(width: 1, color: AppColors.border),
-        SizedBox(width: 360, child: _buildCartPanel()),
-      ],
+    final isMobile = MediaQuery.of(context).size.width < 900;
+    return Consumer<PosProvider>(
+      builder: (context, pos, _) {
+        if (isMobile) {
+          return Stack(
+            children: [
+              _buildProductPanel(),
+              if (pos.itemCount > 0)
+                Positioned(
+                  bottom: 16,
+                  left: 16,
+                  right: 16,
+                  child: Container(
+                    height: 56,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.15),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: ElevatedButton.icon(
+                      onPressed: () => _showMobileCart(context, pos),
+                      icon: const Icon(Icons.shopping_cart_rounded, color: Colors.white),
+                      label: Text(
+                        'Keranjang - ${pos.itemCount} Item (${CurrencyFormatter.format(pos.total)})',
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          );
+        }
+
+        return Row(
+          children: [
+            Expanded(flex: 6, child: _buildProductPanel()),
+            Container(width: 1, color: AppColors.border),
+            SizedBox(width: 380, child: _buildCartPanel()),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showMobileCart(BuildContext context, PosProvider pos) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => Container(
+        height: MediaQuery.of(context).size.height * 0.85,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        child: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 12),
+              width: 40,
+              height: 4,
+              decoration: BoxDecoration(
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            Expanded(child: _buildCartPanel()),
+          ],
+        ),
+      ),
     );
   }
 
@@ -75,7 +155,7 @@ class _PosScreenState extends State<PosScreen> {
               children: [
                 Text(
                   'Kasir',
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     fontSize: 22,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
@@ -83,7 +163,7 @@ class _PosScreenState extends State<PosScreen> {
                 ),
                 Text(
                   '${menu.filteredProducts.where((p) => p.isAvailable).length} menu tersedia',
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     fontSize: 13,
                     color: AppColors.textSecondary,
                   ),
@@ -167,7 +247,7 @@ class _PosScreenState extends State<PosScreen> {
             const SizedBox(height: 12),
             Text(
               'Menu tidak ditemukan',
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.inter(
                 fontSize: 15,
                 color: AppColors.textSecondary,
               ),
@@ -180,7 +260,7 @@ class _PosScreenState extends State<PosScreen> {
     return Consumer<PosProvider>(
       builder: (context, pos, _) {
         return GridView.builder(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.fromLTRB(24, 24, 24, 80), // Extra bottom padding for mobile fab
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 200,
             mainAxisExtent: 220,
@@ -239,7 +319,7 @@ class _PosScreenState extends State<PosScreen> {
             const SizedBox(width: 10),
             Text(
               'Pesanan',
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.inter(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,
@@ -255,7 +335,7 @@ class _PosScreenState extends State<PosScreen> {
                 ),
                 child: Text(
                   '${pos.itemCount}',
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     color: Colors.white,
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
@@ -278,48 +358,122 @@ class _PosScreenState extends State<PosScreen> {
         ),
       );
 
-  Widget _buildCustomerInfo(PosProvider pos) => Container(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-        child: Row(
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _customerCtrl,
-                onChanged: (v) => pos.setCustomerInfo(
-                  name: v,
-                  table: _tableCtrl.text,
+  Widget _buildCustomerInfo(PosProvider pos) {
+    if (pos.tableNumber != null && pos.tableNumber!.isNotEmpty) {
+      _isDineIn = true;
+    }
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: ChoiceChip(
+                  avatar: const Icon(Icons.store_rounded, size: 16),
+                  label: const Text('Dine-in'),
+                  selected: _isDineIn,
+                  onSelected: (selected) {
+                    setState(() {
+                      _isDineIn = true;
+                    });
+                    pos.setCustomerInfo(
+                      name: _customerCtrl.text,
+                      table: pos.tableNumber,
+                    );
+                  },
                 ),
-                decoration: const InputDecoration(
-                  hintText: 'Nama pelanggan',
-                  prefixIcon: Icon(Icons.person_outline_rounded, size: 18),
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                ),
-                style: GoogleFonts.poppins(fontSize: 13),
               ),
-            ),
-            const SizedBox(width: 8),
-            SizedBox(
-              width: 80,
-              child: TextField(
-                controller: _tableCtrl,
-                onChanged: (v) => pos.setCustomerInfo(
-                  name: _customerCtrl.text,
-                  table: v,
+              const SizedBox(width: 8),
+              Expanded(
+                child: ChoiceChip(
+                  avatar: const Icon(Icons.takeout_dining_rounded, size: 16),
+                  label: const Text('Takeaway'),
+                  selected: !_isDineIn,
+                  onSelected: (selected) {
+                    setState(() {
+                      _isDineIn = false;
+                    });
+                    pos.setCustomerInfo(
+                      name: _customerCtrl.text,
+                      table: '',
+                    );
+                  },
                 ),
-                decoration: const InputDecoration(
-                  hintText: 'Meja',
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                ),
-                style: GoogleFonts.poppins(fontSize: 13),
               ),
-            ),
-          ],
-        ),
-      );
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _customerCtrl,
+                  onChanged: (v) => pos.setCustomerInfo(
+                    name: v,
+                    table: _isDineIn ? pos.tableNumber : '',
+                  ),
+                  decoration: const InputDecoration(
+                    hintText: 'Nama pelanggan',
+                    prefixIcon: Icon(Icons.person_outline_rounded, size: 18),
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  ),
+                  style: GoogleFonts.inter(fontSize: 13),
+                ),
+              ),
+              if (_isDineIn) ...[
+                const SizedBox(width: 8),
+                InkWell(
+                  onTap: () async {
+                    final selectedTable = await showDialog<String>(
+                      context: context,
+                      builder: (_) => TableSelectorDialog(selectedTable: pos.tableNumber),
+                    );
+                    if (selectedTable != null) {
+                      pos.setCustomerInfo(
+                        name: _customerCtrl.text,
+                        table: selectedTable,
+                      );
+                    }
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: AppColors.surfaceVariant,
+                      border: Border.all(color: AppColors.border),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.table_restaurant_rounded, size: 16, color: AppColors.primary),
+                        const SizedBox(width: 6),
+                        Text(
+                          pos.tableNumber != null && pos.tableNumber!.isNotEmpty
+                              ? 'Meja ${pos.tableNumber}'
+                              : 'Pilih Meja',
+                          style: GoogleFonts.inter(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildCartList(PosProvider pos) => ListView.builder(
+        padding: const EdgeInsets.only(top: 8),
         itemCount: pos.cart.length,
         itemBuilder: (_, i) {
           final entry = pos.cart[i];
@@ -382,7 +536,7 @@ class _PosScreenState extends State<PosScreen> {
                           const SizedBox(width: 8),
                           Text(
                             'Proses Pembayaran',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.inter(
                               color: Colors.white,
                               fontWeight: FontWeight.w700,
                               fontSize: 15,
@@ -404,16 +558,12 @@ class _PosScreenState extends State<PosScreen> {
     );
     if (order != null && mounted) {
       _customerCtrl.clear();
-      _tableCtrl.clear();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Pesanan berhasil! ${order.orderNumber}',
-            style: GoogleFonts.poppins(),
-          ),
-          backgroundColor: AppColors.success,
-          behavior: SnackBarBehavior.floating,
-        ),
+      
+      // Show thermal receipt preview
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => ReceiptPreviewDialog(order: order),
       );
     }
   }
@@ -425,11 +575,11 @@ class _PosScreenState extends State<PosScreen> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
           'Hapus Pesanan?',
-          style: GoogleFonts.poppins(fontWeight: FontWeight.w700),
+          style: GoogleFonts.inter(fontWeight: FontWeight.w700),
         ),
         content: Text(
           'Semua item di keranjang akan dihapus.',
-          style: GoogleFonts.poppins(fontSize: 13),
+          style: GoogleFonts.inter(fontSize: 13),
         ),
         actions: [
           TextButton(
@@ -449,7 +599,6 @@ class _PosScreenState extends State<PosScreen> {
     if (ok == true) {
       pos.clearCart();
       _customerCtrl.clear();
-      _tableCtrl.clear();
     }
   }
 }
@@ -481,11 +630,15 @@ class _CategoryChip extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(category.icon, style: const TextStyle(fontSize: 14)),
+              Icon(
+                IconHelper.getCategoryIcon(category.name),
+                size: 16,
+                color: isSelected ? Colors.white : AppColors.primary,
+              ),
               const SizedBox(width: 6),
               Text(
                 category.name,
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 13,
                   fontWeight:
                       isSelected ? FontWeight.w600 : FontWeight.w400,
@@ -519,7 +672,7 @@ class _SummaryLine extends StatelessWidget {
         children: [
           Text(
             label,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: large ? 15 : 13,
               fontWeight: large ? FontWeight.w600 : FontWeight.w400,
               color: secondary
@@ -529,7 +682,7 @@ class _SummaryLine extends StatelessWidget {
           ),
           Text(
             value,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: large ? 18 : 13,
               fontWeight: large ? FontWeight.w700 : FontWeight.w500,
               color: primary ? AppColors.primary : AppColors.textPrimary,
@@ -546,7 +699,7 @@ class _EmptyCart extends StatelessWidget {
   Widget build(BuildContext context) => Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+          const Icon(
             Icons.shopping_cart_outlined,
             size: 64,
             color: AppColors.border,
@@ -554,7 +707,7 @@ class _EmptyCart extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             'Keranjang kosong',
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 15,
               color: AppColors.textSecondary,
               fontWeight: FontWeight.w500,
@@ -564,7 +717,7 @@ class _EmptyCart extends StatelessWidget {
           Text(
             'Pilih menu untuk mulai\nmembuat pesanan',
             textAlign: TextAlign.center,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 13,
               color: AppColors.textHint,
             ),
@@ -589,7 +742,7 @@ class _ErrorView extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               'Koneksi gagal',
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.inter(
                 fontSize: 15,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
@@ -598,7 +751,7 @@ class _ErrorView extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               message,
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.inter(
                 fontSize: 12,
                 color: AppColors.textSecondary,
               ),

@@ -67,8 +67,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '$greeting, Admin! 👋',
-          style: GoogleFonts.poppins(
+          '$greeting, Admin!',
+          style: GoogleFonts.inter(
             fontSize: 24,
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
@@ -76,7 +76,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         Text(
           DateFormat('EEEE, d MMMM yyyy', 'id_ID').format(now),
-          style: GoogleFonts.poppins(
+          style: GoogleFonts.inter(
             fontSize: 14,
             color: AppColors.textSecondary,
           ),
@@ -149,7 +149,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const SizedBox(width: 8),
               Text(
                 'Penjualan 7 Hari Terakhir',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
@@ -221,7 +221,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   padding: const EdgeInsets.only(top: 8),
                   child: Text(
                     DateFormat('E', 'id_ID').format(date),
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.inter(
                       fontSize: 11,
                       color: AppColors.textSecondary,
                     ),
@@ -236,7 +236,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               reservedSize: 60,
               getTitlesWidget: (v, meta) => Text(
                 CurrencyFormatter.compact(v),
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 10,
                   color: AppColors.textSecondary,
                 ),
@@ -253,7 +253,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             getTooltipColor: (_) => AppColors.primary,
             getTooltipItem: (group, _, rod, __) => BarTooltipItem(
               CurrencyFormatter.format(rod.toY),
-              GoogleFonts.poppins(
+              GoogleFonts.inter(
                 color: Colors.white,
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
@@ -274,7 +274,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             const SizedBox(height: 12),
             Text(
               'Belum ada data penjualan',
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.inter(
                 fontSize: 14,
                 color: AppColors.textSecondary,
               ),
@@ -301,7 +301,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const SizedBox(width: 8),
               Text(
                 'Menu Terlaris',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
@@ -314,7 +314,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Center(
               child: Text(
                 'Belum ada data',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                     fontSize: 13, color: AppColors.textSecondary),
               ),
             )
@@ -341,7 +341,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       child: Center(
                         child: Text(
                           '#$rank',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.inter(
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
                             color: rank <= 3
@@ -358,7 +358,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         children: [
                           Text(
                             item['product_name'].toString(),
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.inter(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textPrimary,
@@ -368,7 +368,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           ),
                           Text(
                             '$qty terjual',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.inter(
                               fontSize: 11,
                               color: AppColors.textSecondary,
                             ),
@@ -378,7 +378,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     Text(
                       CurrencyFormatter.compact(revenue),
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.inter(
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
                         color: AppColors.primary,
@@ -442,7 +442,7 @@ class _StatCard extends StatelessWidget {
                 children: [
                   Text(
                     data.label,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.inter(
                       fontSize: 12,
                       color: AppColors.textSecondary,
                     ),
@@ -450,7 +450,7 @@ class _StatCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     data.value,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.inter(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                       color: AppColors.textPrimary,

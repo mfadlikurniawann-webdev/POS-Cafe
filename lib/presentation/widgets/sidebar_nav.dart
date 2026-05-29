@@ -96,7 +96,7 @@ class SidebarNav extends StatelessWidget {
                 children: [
                   Text(
                     'Kopi Nusantara',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.inter(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
                       fontSize: 13,
@@ -105,7 +105,7 @@ class SidebarNav extends StatelessWidget {
                   ),
                   Text(
                     'Point of Sale',
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.inter(
                       color: Colors.white38,
                       fontSize: 11,
                     ),
@@ -132,7 +132,7 @@ class SidebarNav extends StatelessWidget {
               children: [
                 Text(
                   'Admin',
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     color: Colors.white,
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
@@ -140,7 +140,7 @@ class SidebarNav extends StatelessWidget {
                 ),
                 Text(
                   'Kasir',
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     color: Colors.white38,
                     fontSize: 11,
                   ),
@@ -195,7 +195,7 @@ class _NavTile extends StatelessWidget {
                 const SizedBox(width: 12),
                 Text(
                   item.label,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     color: isSelected ? AppColors.accent : Colors.white54,
                     fontSize: 13,
                     fontWeight: isSelected

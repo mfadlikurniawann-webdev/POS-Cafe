@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
 import '../../providers/order_provider.dart';
@@ -8,6 +9,7 @@ import 'menu/menu_screen.dart';
 import 'orders/orders_screen.dart';
 import 'pos/pos_screen.dart';
 import 'reports/reports_screen.dart';
+import 'customer/customer_order_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -18,6 +20,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   NavItem _selectedNav = NavItem.pos;
+  bool _isCustomerMode = false;
 
   @override
   void initState() {
@@ -44,14 +47,22 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isCustomerMode) {
+      return CustomerOrderScreen(
+        onExit: () => setState(() => _isCustomerMode = false),
+      );
+    }
+
+    final isMobile = MediaQuery.of(context).size.width < 900;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Row(
         children: [
-          SidebarNav(
-            selected: _selectedNav,
-            onSelect: (nav) => setState(() => _selectedNav = nav),
-          ),
+          if (!isMobile)
+            SidebarNav(
+              selected: _selectedNav,
+              onSelect: (nav) => setState(() => _selectedNav = nav),
+            ),
           Expanded(
             child: ClipRect(
               child: AnimatedSwitcher(
@@ -69,6 +80,30 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => setState(() => _isCustomerMode = true),
+        icon: const Icon(Icons.qr_code_scanner_rounded),
+        label: const Text('Mode Pelanggan'),
+        backgroundColor: AppColors.primary,
+        foregroundColor: Colors.white,
+      ),
+      bottomNavigationBar: isMobile
+          ? BottomNavigationBar(
+              currentIndex: _selectedNav.index,
+              onTap: (index) => setState(() => _selectedNav = NavItem.values[index]),
+              type: BottomNavigationBarType.fixed,
+              selectedItemColor: AppColors.primary,
+              unselectedItemColor: AppColors.textSecondary,
+              selectedLabelStyle: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 11),
+              unselectedLabelStyle: GoogleFonts.inter(fontSize: 11),
+              items: NavItem.values
+                  .map((item) => BottomNavigationBarItem(
+                        icon: Icon(item.icon, size: 20),
+                        label: item.label,
+                      ))
+                  .toList(),
+            )
+          : null,
     );
   }
 }

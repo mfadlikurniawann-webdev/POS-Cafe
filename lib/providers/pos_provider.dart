@@ -128,7 +128,7 @@ class PosProvider extends ChangeNotifier {
               ))
           .toList();
 
-      _lastOrder = await _orderRepo.createOrder(
+      final createdOrder = await _orderRepo.createOrder(
         orderNumber: orderNumber,
         items: items,
         totalAmount: total,
@@ -141,8 +141,14 @@ class PosProvider extends ChangeNotifier {
         notes: _orderNotes,
       );
 
-      clearCart();
-      return _lastOrder;
+      _cart.clear();
+      _customerName = null;
+      _tableNumber = null;
+      _orderNotes = null;
+      _lastOrder = createdOrder;
+      _error = null;
+      notifyListeners();
+      return createdOrder;
     } catch (e) {
       _error = e.toString();
       return null;

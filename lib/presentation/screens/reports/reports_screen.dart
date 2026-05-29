@@ -60,7 +60,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
         children: [
           Text(
             'Laporan Penjualan',
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 22,
               fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,
@@ -68,7 +68,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
           ),
           Text(
             'Statistik penjualan tahunan',
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 13,
               color: AppColors.textSecondary,
             ),
@@ -94,7 +94,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               const SizedBox(width: 8),
               Text(
                 'Pendapatan Bulanan',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
@@ -181,7 +181,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   padding: const EdgeInsets.only(top: 8),
                   child: Text(
                     data[idx]['month'].toString(),
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.inter(
                       fontSize: 11,
                       color: AppColors.textSecondary,
                     ),
@@ -196,7 +196,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               reservedSize: 70,
               getTitlesWidget: (v, meta) => Text(
                 CurrencyFormatter.compact(v),
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 10,
                   color: AppColors.textSecondary,
                 ),
@@ -214,7 +214,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
             getTooltipItems: (spots) => spots
                 .map((s) => LineTooltipItem(
                       CurrencyFormatter.format(s.y),
-                      GoogleFonts.poppins(
+                      GoogleFonts.inter(
                         color: Colors.white,
                         fontSize: 11,
                         fontWeight: FontWeight.w600,
@@ -245,7 +245,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               const SizedBox(width: 8),
               Text(
                 'Distribusi Penjualan',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
@@ -290,7 +290,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
             color: colors[e.key % colors.length],
             title:
                 '${(qty / total * 100).toStringAsFixed(0)}%',
-            titleStyle: GoogleFonts.poppins(
+            titleStyle: GoogleFonts.inter(
               fontSize: 12,
               fontWeight: FontWeight.w700,
               color: Colors.white,
@@ -331,7 +331,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               Expanded(
                 child: Text(
                   e.value['product_name'].toString(),
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     fontSize: 12,
                     color: AppColors.textSecondary,
                   ),
@@ -340,7 +340,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               ),
               Text(
                 '${e.value['total_qty']}x',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textPrimary,
@@ -371,7 +371,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               const SizedBox(width: 8),
               Text(
                 'Ringkasan Produk Terlaris (30 hari)',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
                   color: AppColors.textPrimary,
@@ -388,7 +388,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               child: Center(
                 child: Text(
                   'Belum ada data',
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                       fontSize: 13, color: AppColors.textSecondary),
                 ),
               ),
@@ -409,7 +409,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               width: 40,
               child: Text(
                 'No.',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textSecondary,
@@ -419,7 +419,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
             Expanded(
               child: Text(
                 'Nama Menu',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textSecondary,
@@ -430,7 +430,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               width: 100,
               child: Text(
                 'Qty Terjual',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textSecondary,
@@ -442,7 +442,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               width: 160,
               child: Text(
                 'Total Pendapatan',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textSecondary,
@@ -466,7 +466,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                 width: 40,
                 child: Text(
                   '$rank',
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     fontSize: 13,
                     color: AppColors.textSecondary,
                   ),
@@ -475,7 +475,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               Expanded(
                 child: Text(
                   item['product_name'].toString(),
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
                     color: AppColors.textPrimary,
@@ -486,7 +486,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                 width: 100,
                 child: Text(
                   '${item['total_qty']}x',
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                     color: AppColors.primary,
@@ -499,7 +499,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                 child: Text(
                   CurrencyFormatter.format(
                       double.parse(item['total_revenue'].toString())),
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                     color: AppColors.success,
@@ -521,7 +521,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
             const SizedBox(height: 8),
             Text(
               'Belum ada data',
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.inter(
                 fontSize: 13,
                 color: AppColors.textSecondary,
               ),

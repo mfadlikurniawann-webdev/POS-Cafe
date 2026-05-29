@@ -37,7 +37,7 @@ class CartItemWidget extends StatelessWidget {
               children: [
                 Text(
                   entry.product.name,
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
@@ -47,7 +47,7 @@ class CartItemWidget extends StatelessWidget {
                 ),
                 Text(
                   CurrencyFormatter.format(entry.product.price),
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     fontSize: 12,
                     color: AppColors.textSecondary,
                   ),
@@ -61,7 +61,7 @@ class CartItemWidget extends StatelessWidget {
             children: [
               Text(
                 CurrencyFormatter.format(entry.subtotal),
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
                   color: AppColors.primary,
@@ -98,7 +98,7 @@ class CartItemWidget extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               '${entry.quantity}',
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.inter(
                 fontSize: 13,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimary,

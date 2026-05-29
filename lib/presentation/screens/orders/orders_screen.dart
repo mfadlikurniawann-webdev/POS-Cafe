@@ -47,7 +47,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
               children: [
                 Text(
                   'Riwayat Pesanan',
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     fontSize: 22,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
@@ -55,7 +55,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 ),
                 Text(
                   '${op.orders.length} transaksi',
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     fontSize: 13,
                     color: AppColors.textSecondary,
                   ),
@@ -89,7 +89,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             const SizedBox(height: 16),
             Text(
               'Belum ada pesanan',
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.inter(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textSecondary,
@@ -163,7 +163,7 @@ class _OrderCard extends StatelessWidget {
                       children: [
                         Text(
                           order.orderNumber,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.inter(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
                             color: AppColors.textPrimary,
@@ -182,7 +182,7 @@ class _OrderCard extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             order.customerName!,
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.inter(
                               fontSize: 12,
                               color: AppColors.textSecondary,
                             ),
@@ -195,7 +195,7 @@ class _OrderCard extends StatelessWidget {
                           const SizedBox(width: 4),
                           Text(
                             'Meja ${order.tableNumber}',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.inter(
                               fontSize: 12,
                               color: AppColors.textSecondary,
                             ),
@@ -210,7 +210,7 @@ class _OrderCard extends StatelessWidget {
                               ? DateFormat('dd MMM, HH:mm').format(
                                   order.createdAt!.toLocal())
                               : '-',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.inter(
                             fontSize: 12,
                             color: AppColors.textSecondary,
                           ),
@@ -220,7 +220,7 @@ class _OrderCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       '${order.items.length} item · ${_payMethodLabel(order.paymentMethod)}',
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.inter(
                         fontSize: 12,
                         color: AppColors.textHint,
                       ),
@@ -234,7 +234,7 @@ class _OrderCard extends StatelessWidget {
                 children: [
                   Text(
                     CurrencyFormatter.format(order.totalAmount),
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.inter(
                       fontSize: 15,
                       fontWeight: FontWeight.w700,
                       color: AppColors.primary,
@@ -293,7 +293,7 @@ class _StatusBadge extends StatelessWidget {
       ),
       child: Text(
         status.label,
-        style: GoogleFonts.poppins(
+        style: GoogleFonts.inter(
           fontSize: 11,
           fontWeight: FontWeight.w600,
           color: color,
@@ -344,7 +344,7 @@ class _OrderDetailDialog extends StatelessWidget {
           Expanded(
             child: Text(
               order.orderNumber,
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.inter(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
               ),
@@ -410,7 +410,7 @@ class _OrderDetailDialog extends StatelessWidget {
                         child: Center(
                           child: Text(
                             '${item.quantity}',
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.inter(
                               color: Colors.white,
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -422,7 +422,7 @@ class _OrderDetailDialog extends StatelessWidget {
                       Expanded(
                         child: Text(
                           item.productName,
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.inter(
                             fontSize: 13,
                             color: AppColors.textPrimary,
                           ),
@@ -430,7 +430,7 @@ class _OrderDetailDialog extends StatelessWidget {
                       ),
                       Text(
                         CurrencyFormatter.format(item.subtotal),
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.inter(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
                           color: AppColors.textPrimary,
@@ -487,7 +487,7 @@ class _InfoItem extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 label,
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 11,
                   color: AppColors.textHint,
                 ),
@@ -496,7 +496,7 @@ class _InfoItem extends StatelessWidget {
           ),
           Text(
             value,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 13,
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
@@ -527,7 +527,7 @@ class _TotalRow extends StatelessWidget {
         children: [
           Text(
             label,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: bold ? 15 : 13,
               fontWeight: bold ? FontWeight.w600 : FontWeight.w400,
               color: secondary
@@ -537,7 +537,7 @@ class _TotalRow extends StatelessWidget {
           ),
           Text(
             value,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: bold ? 16 : 13,
               fontWeight: bold ? FontWeight.w700 : FontWeight.w500,
               color: primary ? AppColors.primary : AppColors.textPrimary,

@@ -62,55 +62,55 @@ class AppTheme {
           error: AppColors.error,
         ),
         scaffoldBackgroundColor: AppColors.background,
-        textTheme: GoogleFonts.poppinsTextTheme().copyWith(
-          displayLarge: GoogleFonts.poppins(
+        textTheme: GoogleFonts.interTextTheme().copyWith(
+          displayLarge: GoogleFonts.inter(
             fontSize: 32,
             fontWeight: FontWeight.w700,
             color: AppColors.textPrimary,
           ),
-          displayMedium: GoogleFonts.poppins(
+          displayMedium: GoogleFonts.inter(
             fontSize: 24,
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),
-          headlineLarge: GoogleFonts.poppins(
+          headlineLarge: GoogleFonts.inter(
             fontSize: 22,
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),
-          headlineMedium: GoogleFonts.poppins(
+          headlineMedium: GoogleFonts.inter(
             fontSize: 18,
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),
-          headlineSmall: GoogleFonts.poppins(
+          headlineSmall: GoogleFonts.inter(
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),
-          titleLarge: GoogleFonts.poppins(
+          titleLarge: GoogleFonts.inter(
             fontSize: 15,
             fontWeight: FontWeight.w600,
             color: AppColors.textPrimary,
           ),
-          titleMedium: GoogleFonts.poppins(
+          titleMedium: GoogleFonts.inter(
             fontSize: 14,
             fontWeight: FontWeight.w500,
             color: AppColors.textPrimary,
           ),
-          bodyLarge: GoogleFonts.poppins(
+          bodyLarge: GoogleFonts.inter(
             fontSize: 14,
             color: AppColors.textPrimary,
           ),
-          bodyMedium: GoogleFonts.poppins(
+          bodyMedium: GoogleFonts.inter(
             fontSize: 13,
             color: AppColors.textSecondary,
           ),
-          bodySmall: GoogleFonts.poppins(
+          bodySmall: GoogleFonts.inter(
             fontSize: 12,
             color: AppColors.textSecondary,
           ),
-          labelLarge: GoogleFonts.poppins(
+          labelLarge: GoogleFonts.inter(
             fontSize: 13,
             fontWeight: FontWeight.w600,
             letterSpacing: 0.5,
@@ -134,7 +134,7 @@ class AppTheme {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
-            textStyle: GoogleFonts.poppins(
+            textStyle: GoogleFonts.inter(
               fontSize: 14,
               fontWeight: FontWeight.w600,
             ),
@@ -148,7 +148,7 @@ class AppTheme {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
-            textStyle: GoogleFonts.poppins(
+            textStyle: GoogleFonts.inter(
               fontSize: 14,
               fontWeight: FontWeight.w600,
             ),
@@ -171,7 +171,7 @@ class AppTheme {
           ),
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          hintStyle: GoogleFonts.poppins(
+          hintStyle: GoogleFonts.inter(
             fontSize: 13,
             color: AppColors.textHint,
           ),
@@ -184,7 +184,7 @@ class AppTheme {
         chipTheme: ChipThemeData(
           backgroundColor: AppColors.surfaceVariant,
           selectedColor: AppColors.primary,
-          labelStyle: GoogleFonts.poppins(fontSize: 13),
+          labelStyle: GoogleFonts.inter(fontSize: 13),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
@@ -196,7 +196,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          contentTextStyle: GoogleFonts.poppins(fontSize: 13),
+          contentTextStyle: GoogleFonts.inter(fontSize: 13),
         ),
       );
 }

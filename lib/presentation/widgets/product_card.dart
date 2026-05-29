@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../core/theme/app_theme.dart';
 import '../../core/utils/currency_formatter.dart';
+import '../../core/utils/icon_helper.dart';
 import '../../data/models/product.dart';
 
 class ProductCard extends StatefulWidget {
@@ -127,7 +128,7 @@ class _ProductCardState extends State<ProductCard>
               ),
               child: Text(
                 CurrencyFormatter.format(widget.product.price),
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   color: Colors.white,
                   fontSize: 11,
                   fontWeight: FontWeight.w600,
@@ -141,8 +142,10 @@ class _ProductCardState extends State<ProductCard>
   }
 
   Widget _buildPlaceholder() {
-    final icons = ['☕', '🧋', '🍽️', '🍪', '🍰'];
-    final icon = icons[(widget.product.id - 1) % icons.length];
+    final iconData = IconHelper.getProductPlaceholderIcon(
+      widget.product.name,
+      null, // Category name unknown directly, helper handles product name lookup
+    );
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -158,7 +161,11 @@ class _ProductCardState extends State<ProductCard>
         borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
       ),
       child: Center(
-        child: Text(icon, style: const TextStyle(fontSize: 36)),
+        child: Icon(
+          iconData,
+          size: 32,
+          color: AppColors.primary.withOpacity(0.6),
+        ),
       ),
     );
   }
@@ -171,7 +178,7 @@ class _ProductCardState extends State<ProductCard>
         children: [
           Text(
             widget.product.name,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 13,
               fontWeight: FontWeight.w600,
               color: AppColors.textPrimary,
@@ -183,7 +190,7 @@ class _ProductCardState extends State<ProductCard>
             const SizedBox(height: 2),
             Text(
               widget.product.description!,
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.inter(
                 fontSize: 11,
                 color: AppColors.textSecondary,
               ),
@@ -207,7 +214,7 @@ class _ProductCardState extends State<ProductCard>
               ),
               child: Text(
                 widget.product.isAvailable ? '+ Tambah' : 'Tidak Tersedia',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,
@@ -234,7 +241,7 @@ class _ProductCardState extends State<ProductCard>
             ),
             child: Text(
               'Habis',
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.inter(
                 color: Colors.white,
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
@@ -257,7 +264,7 @@ class _ProductCardState extends State<ProductCard>
           child: Center(
             child: Text(
               '${widget.cartQuantity}',
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.inter(
                 color: Colors.white,
                 fontSize: 11,
                 fontWeight: FontWeight.w700,

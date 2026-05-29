@@ -36,27 +36,25 @@ class _PaymentDialogState extends State<PaymentDialog> {
     final pos = context.watch<PosProvider>();
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-      child: SizedBox(
+      child: Container(
         width: 480,
-        child: Padding(
-          padding: const EdgeInsets.all(28),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildHeader(),
-              const SizedBox(height: 24),
-              _buildOrderSummary(pos),
-              const SizedBox(height: 20),
-              _buildPaymentMethods(),
-              if (_method == PaymentMethod.cash) ...[
-                const SizedBox(height: 16),
-                _buildCashInput(pos),
-              ],
-              const SizedBox(height: 24),
-              _buildActions(pos),
+        padding: const EdgeInsets.all(28),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildHeader(),
+            const SizedBox(height: 24),
+            _buildOrderSummary(pos),
+            const SizedBox(height: 20),
+            _buildPaymentMethods(),
+            if (_method == PaymentMethod.cash) ...[
+              const SizedBox(height: 16),
+              _buildCashInput(pos),
             ],
-          ),
+            const SizedBox(height: 24),
+            _buildActions(pos),
+          ],
         ),
       ),
     );
@@ -69,7 +67,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
           const SizedBox(width: 10),
           Text(
             'Proses Pembayaran',
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 18,
               fontWeight: FontWeight.w700,
               color: AppColors.textPrimary,
@@ -124,7 +122,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
         children: [
           Text(
             'Metode Pembayaran',
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 13,
               fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,
@@ -157,7 +155,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
         children: [
           Text(
             'Jumlah Uang Diterima',
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 13,
               fontWeight: FontWeight.w600,
               color: AppColors.textSecondary,
@@ -172,7 +170,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
                 setState(() => _payAmount = double.tryParse(v) ?? 0),
             decoration: InputDecoration(
               prefixText: 'Rp ',
-              prefixStyle: GoogleFonts.poppins(
+              prefixStyle: GoogleFonts.inter(
                 fontWeight: FontWeight.w600,
                 color: AppColors.textPrimary,
               ),
@@ -244,7 +242,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
                         const SizedBox(width: 8),
                         Text(
                           'Bayar Sekarang',
-                          style: GoogleFonts.poppins(
+                          style: GoogleFonts.inter(
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
                             fontSize: 15,
@@ -297,7 +295,7 @@ class _SummaryRow extends StatelessWidget {
         children: [
           Text(
             label,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 13,
               fontWeight: isBold ? FontWeight.w600 : FontWeight.w400,
               color: textColor ?? AppColors.textPrimary,
@@ -305,7 +303,7 @@ class _SummaryRow extends StatelessWidget {
           ),
           Text(
             value,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 13,
               fontWeight: isBold ? FontWeight.w700 : FontWeight.w500,
               color: textColor ?? AppColors.textPrimary,
@@ -366,7 +364,7 @@ class _PayMethodBtn extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               method.label,
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.inter(
                 fontSize: 11,
                 fontWeight:
                     isSelected ? FontWeight.w600 : FontWeight.w400,
@@ -398,7 +396,7 @@ class _QuickBtn extends StatelessWidget {
           ),
           child: Text(
             label,
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 12,
               fontWeight: FontWeight.w600,
               color: AppColors.primary,

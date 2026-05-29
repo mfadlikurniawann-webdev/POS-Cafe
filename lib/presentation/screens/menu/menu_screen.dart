@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/utils/currency_formatter.dart';
+import '../../../core/utils/icon_helper.dart';
 import '../../../data/models/category.dart';
 import '../../../data/models/product.dart';
 import '../../../providers/menu_provider.dart';
@@ -56,7 +57,7 @@ class _MenuScreenState extends State<MenuScreen> {
               children: [
                 Text(
                   'Manajemen Menu',
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     fontSize: 22,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textPrimary,
@@ -64,7 +65,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 ),
                 Text(
                   '${menu.products.length} item terdaftar',
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.inter(
                     fontSize: 13,
                     color: AppColors.textSecondary,
                   ),
@@ -91,7 +92,7 @@ class _MenuScreenState extends State<MenuScreen> {
               icon: const Icon(Icons.add_rounded, size: 18, color: Colors.white),
               label: Text(
                 'Tambah Menu',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                     fontWeight: FontWeight.w600, color: Colors.white),
               ),
             ),
@@ -118,7 +119,7 @@ class _MenuScreenState extends State<MenuScreen> {
             const SizedBox(height: 16),
             Text(
               'Belum ada menu',
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.inter(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
                 color: AppColors.textSecondary,
@@ -127,7 +128,7 @@ class _MenuScreenState extends State<MenuScreen> {
             const SizedBox(height: 8),
             Text(
               'Klik "Tambah Menu" untuk mulai menambahkan produk',
-              style: GoogleFonts.poppins(
+              style: GoogleFonts.inter(
                   fontSize: 13, color: AppColors.textHint),
             ),
           ],
@@ -174,11 +175,11 @@ class _MenuScreenState extends State<MenuScreen> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Text(
           'Hapus Menu?',
-          style: GoogleFonts.poppins(fontWeight: FontWeight.w700),
+          style: GoogleFonts.inter(fontWeight: FontWeight.w700),
         ),
         content: Text(
           'Menu "${product.name}" akan dihapus permanen.',
-          style: GoogleFonts.poppins(fontSize: 13),
+          style: GoogleFonts.inter(fontSize: 13),
         ),
         actions: [
           TextButton(
@@ -199,7 +200,7 @@ class _MenuScreenState extends State<MenuScreen> {
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Menu dihapus', style: GoogleFonts.poppins()),
+            content: Text('Menu dihapus', style: GoogleFonts.inter()),
             backgroundColor: AppColors.error,
           ),
         );
@@ -243,9 +244,10 @@ class _MenuListItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Center(
-                child: Text(
-                  category?.icon ?? '🍽️',
-                  style: const TextStyle(fontSize: 24),
+                child: Icon(
+                  IconHelper.getCategoryIcon(category?.name ?? ''),
+                  size: 22,
+                  color: AppColors.primary,
                 ),
               ),
             ),
@@ -256,7 +258,7 @@ class _MenuListItem extends StatelessWidget {
                 children: [
                   Text(
                     product.name,
-                    style: GoogleFonts.poppins(
+                    style: GoogleFonts.inter(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                       color: AppColors.textPrimary,
@@ -265,7 +267,7 @@ class _MenuListItem extends StatelessWidget {
                   if (product.description != null)
                     Text(
                       product.description!,
-                      style: GoogleFonts.poppins(
+                      style: GoogleFonts.inter(
                         fontSize: 12,
                         color: AppColors.textSecondary,
                       ),
@@ -285,7 +287,7 @@ class _MenuListItem extends StatelessWidget {
                           ),
                           child: Text(
                             category!.name,
-                            style: GoogleFonts.poppins(
+                            style: GoogleFonts.inter(
                               fontSize: 11,
                               color: AppColors.textSecondary,
                             ),
@@ -295,7 +297,7 @@ class _MenuListItem extends StatelessWidget {
                       ],
                       Text(
                         CurrencyFormatter.format(product.price),
-                        style: GoogleFonts.poppins(
+                        style: GoogleFonts.inter(
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
                           color: AppColors.primary,
@@ -451,7 +453,7 @@ class _ProductFormDialogState extends State<_ProductFormDialog> {
           const SizedBox(width: 10),
           Text(
             _isEdit ? 'Edit Menu' : 'Tambah Menu Baru',
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 18,
               fontWeight: FontWeight.w700,
             ),
@@ -507,13 +509,24 @@ class _ProductFormDialogState extends State<_ProductFormDialog> {
       onChanged: (v) => setState(() => _selectedCategory = v),
       decoration: const InputDecoration(labelText: 'Kategori'),
       hint: Text('Pilih kategori',
-          style: GoogleFonts.poppins(fontSize: 13)),
+          style: GoogleFonts.inter(fontSize: 13)),
       items: categories
           .map((c) => DropdownMenuItem(
                 value: c,
-                child: Text(
-                  '${c.icon} ${c.name}',
-                  style: GoogleFonts.poppins(fontSize: 13),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      IconHelper.getCategoryIcon(c.name),
+                      size: 16,
+                      color: AppColors.primary,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      c.name,
+                      style: GoogleFonts.inter(fontSize: 13),
+                    ),
+                  ],
                 ),
               ))
           .toList(),
@@ -537,7 +550,7 @@ class _ProductFormDialogState extends State<_ProductFormDialog> {
             Expanded(
               child: Text(
                 _isAvailable ? 'Tersedia' : 'Tidak Tersedia',
-                style: GoogleFonts.poppins(
+                style: GoogleFonts.inter(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
                   color: _isAvailable ? AppColors.success : AppColors.error,
@@ -618,7 +631,7 @@ class _ProductFormDialogState extends State<_ProductFormDialog> {
         SnackBar(
           content: Text(
             _isEdit ? 'Menu berhasil diperbarui' : 'Menu berhasil ditambahkan',
-            style: GoogleFonts.poppins(),
+            style: GoogleFonts.inter(),
           ),
           backgroundColor: AppColors.success,
         ),
