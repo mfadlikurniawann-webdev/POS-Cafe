@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
 import '../../providers/order_provider.dart';
+import '../../providers/auth_provider.dart';
 import '../widgets/sidebar_nav.dart';
 import 'dashboard/dashboard_screen.dart';
 import 'menu/menu_screen.dart';
 import 'orders/orders_screen.dart';
 import 'pos/pos_screen.dart';
 import 'reports/reports_screen.dart';
-import 'customer/customer_order_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -20,7 +21,6 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   NavItem _selectedNav = NavItem.pos;
-  bool _isCustomerMode = false;
 
   @override
   void initState() {
@@ -47,12 +47,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isCustomerMode) {
-      return CustomerOrderScreen(
-        onExit: () => setState(() => _isCustomerMode = false),
-      );
-    }
-
     final isMobile = MediaQuery.of(context).size.width < 900;
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -81,10 +75,13 @@ class _MainScreenState extends State<MainScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => setState(() => _isCustomerMode = true),
-        icon: const Icon(Icons.qr_code_scanner_rounded),
-        label: const Text('Mode Pelanggan'),
-        backgroundColor: AppColors.primary,
+        onPressed: () {
+          context.read<AuthProvider>().logout();
+          context.go('/');
+        },
+        icon: const Icon(Icons.logout_rounded),
+        label: const Text('Keluar Admin'),
+        backgroundColor: AppColors.error,
         foregroundColor: Colors.white,
       ),
       bottomNavigationBar: isMobile

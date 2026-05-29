@@ -9,7 +9,7 @@ class Category {
   const Category({
     required this.id,
     required this.name,
-    this.icon = '☕',
+    this.icon = 'coffee',
     this.color = '#4A2C17',
     this.sortOrder = 0,
     this.isActive = true,
@@ -18,7 +18,7 @@ class Category {
   factory Category.fromMap(Map<String, dynamic> map) => Category(
         id: map['id'] as int,
         name: map['name'] as String,
-        icon: map['icon'] as String? ?? '☕',
+        icon: map['icon'] as String? ?? 'coffee',
         color: map['color'] as String? ?? '#4A2C17',
         sortOrder: map['sort_order'] as int? ?? 0,
         isActive: map['is_active'] as bool? ?? true,
@@ -50,4 +50,4 @@ class Category {
 }
 
 // Virtual "All" category for filter
-const Category categoryAll = Category(id: 0, name: 'Semua', icon: '🍽️');
+const Category categoryAll = Category(id: 0, name: 'Semua', icon: 'all');

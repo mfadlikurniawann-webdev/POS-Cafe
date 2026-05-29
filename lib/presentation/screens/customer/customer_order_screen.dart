@@ -7,14 +7,13 @@ import '../../../core/utils/icon_helper.dart';
 import '../../../data/models/category.dart';
 import '../../../providers/menu_provider.dart';
 import '../../../providers/pos_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../widgets/cart_item_widget.dart';
 import '../../widgets/product_card.dart';
 import 'xendit_payment_screen.dart';
 
 class CustomerOrderScreen extends StatefulWidget {
-  final VoidCallback onExit;
-
-  const CustomerOrderScreen({super.key, required this.onExit});
+  const CustomerOrderScreen({super.key});
 
   @override
   State<CustomerOrderScreen> createState() => _CustomerOrderScreenState();
@@ -51,23 +50,6 @@ class _CustomerOrderScreenState extends State<CustomerOrderScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text(
-          'Pemesanan Mandiri',
-          style: GoogleFonts.inter(fontWeight: FontWeight.w700, fontSize: 18),
-        ),
-        actions: [
-          TextButton.icon(
-            onPressed: widget.onExit,
-            icon: const Icon(Icons.exit_to_app_rounded, size: 18),
-            label: const Text('Mode Kasir'),
-            style: TextButton.styleFrom(foregroundColor: AppColors.primary),
-          ),
-          const SizedBox(width: 8),
-        ],
-        elevation: 0,
-        backgroundColor: Colors.white,
-      ),
       body: Column(
         children: [
           _buildInfoBanner(pos),
@@ -427,6 +409,12 @@ class _CustomerOrderScreenState extends State<CustomerOrderScreen> {
                         );
 
                         if (order != null && context.mounted) {
+                          // Save to SharedPreferences for History
+                          final prefs = await SharedPreferences.getInstance();
+                          final history = prefs.getStringList('customer_orders') ?? [];
+                          history.add(order.orderNumber);
+                          await prefs.setStringList('customer_orders', history);
+
                           _customerCtrl.clear();
                           _tableCtrl.clear();
                           ScaffoldMessenger.of(context).showSnackBar(

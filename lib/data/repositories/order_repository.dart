@@ -179,4 +179,12 @@ class OrderRepository {
     );
     return affected > 0;
   }
+
+  Future<bool> updateOrderStatus(int id, OrderStatus status) async {
+    final affected = await _db.execute(
+      "UPDATE orders SET status = @status WHERE id = @id",
+      params: {'id': id, 'status': status.value},
+    );
+    return affected > 0;
+  }
 }
